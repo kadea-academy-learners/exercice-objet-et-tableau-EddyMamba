@@ -5,9 +5,15 @@
 // - estAdmin (boolean)
 // La fonction doit retourner un tableau contenant les noms des utilisateurs qui sont admin.
 
-function whoIsAdmin() {
-	
-}
+function whoIsAdmin(users) {
+	const admins = [];
+	for(let i=0;i< users.length; i++){
+		if(users[i].estAdmin){
+			admins.push(users[i].nom)
+		}
+	}
+	return admins;
+};
 
 module.exports = {
 	whoIsAdmin,
