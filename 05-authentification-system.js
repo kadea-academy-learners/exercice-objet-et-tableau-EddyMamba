@@ -21,11 +21,49 @@
 const baseDeDonnees = [];
 
 function signUp(nom, email, password, confirmPassword) {
-	
+        const utilisateurExistant = baseDeDonnees.find(user => user.email === email);
+    if (utilisateurExistant) {
+        return "Erreur: cet email existe déjà";
+    }
+
+    // Vérifie si les mots de passe correspondent
+    if (password !== confirmPassword) {
+        return "Erreur: les mots de passe ne correspondent pas";
+    }
+
+    // Crée un nouvel utilisateur
+    const nouvelUtilisateur = {
+        id: baseDeDonnees.length + 1, // id unique
+        nom: nom,
+        email: email,
+        password: password,
+        estConnecte: false,
+        estBloque: false
+    };
+
+    baseDeDonnees.push(nouvelUtilisateur);
+    return nouvelUtilisateur;
 }
 
-function login() {
-	
+function login(email, password) {
+      const utilisateur = baseDeDonnees.find(user => user.email === email);
+
+    if (!utilisateur) {
+        return "Erreur: utilisateur non trouvé";
+    }
+
+    if (utilisateur.password !== password) {
+        return "Erreur: mot de passe incorrect";
+    }
+
+    if (utilisateur.estBloque) {
+        return "Erreur: utilisateur bloqué";
+    }
+
+    utilisateur.estConnecte = true;
+    return utilisateur;
 }
+	
+
 
 module.exports = { baseDeDonnees, signUp, login };
